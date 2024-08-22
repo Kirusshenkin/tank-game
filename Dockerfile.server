@@ -14,7 +14,7 @@ RUN go mod download
 COPY . .
 
 # Build the Go app without setting GOARCH and GOOS (let Docker handle the architecture)
-RUN GOARCH=arm64 GOOS=linux go build -o ./build/tank-server ./cmd/server
+RUN go build -o ./build/tank-server ./cmd/server
 
 # Ensure the binary is executable
 RUN chmod +x ./build/tank-server

@@ -2,30 +2,31 @@ package network
 
 import (
 	"fmt"
-	"log"
 	"net/http"
-	"tank-game/internal/handlers"
+
+	"tank-game/internal/game"
 )
 
 type Server struct {
-	port        string
-	gameHandler *handlers.GameHandler
+	port      string
+	gameState *game.GameState
 }
 
-func NewServer(port string, gameHandler *handlers.GameHandler) *Server {
+func NewServer(port string, gameState *game.GameState) *Server {
 	return &Server{
-		port:        port,
-		gameHandler: gameHandler,
+		port:      port,
+		gameState: gameState,
 	}
 }
 
-func (s *Server) Start() {
-	// маршрутизация запросов
-	SetupRoutes(s.gameHandler)
+func (s *Server) Start() error {
+	http.HandleFunc("/health", s.healthCheck)
+	// Другие маршруты
 
-	log.Printf("Server started at port %s", s.port)
-	err := http.ListenAndServe(fmt.Sprintf(":%s", s.port), nil)
-	if err != nil {
-		log.Fatalf("Failed to start server: %v", err)
-	}
+	return http.ListenAndServe(fmt.Sprintf(":%s", s.port), nil)
+}
+
+func (s *Server) healthCheck(w http.ResponseWriter, r *http.Request) {
+	w.WriteHeader(http.StatusOK)
+	w.Write([]byte("OK"))
 }

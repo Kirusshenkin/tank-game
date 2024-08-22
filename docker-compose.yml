@@ -5,6 +5,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.server
+    platform: linux/arm64
     ports:
       - "8080:8080"
     depends_on:
@@ -18,10 +19,11 @@ services:
 
   postgres:
     image: postgres:16.2-alpine
+    platform: linux/arm64
     environment:
-      POSTGRES_USER: tankuser
-      POSTGRES_PASSWORD: tankpassword
-      POSTGRES_DB: tankgame
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: postgres
     volumes:
       - pgdata16:/var/lib/postgresql/data
     networks:
@@ -29,6 +31,7 @@ services:
 
   redis:
     image: redis:alpine
+    platform: linux/arm64
     ports:
       - "6379:6379"
 
