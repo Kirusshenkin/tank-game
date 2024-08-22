@@ -1,0 +1,18 @@
+# config.yaml или .env
+server:
+  port: "8888"
+
+database:
+  host: "localhost"  # Используйте "localhost", если сервер запускается на хост-машине, или "postgres", если в Docker
+  port: 5432
+  name: "postgres"
+  user: "postgres"
+  password: "postgres"
+  sslmode: "disable"
+
+redis:
+  host: "localhost"  # Используйте "localhost", если сервер запускается на хост-машине, или "redis", если в Docker
+  port: 6379
+
+
+  
